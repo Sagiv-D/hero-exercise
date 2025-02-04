@@ -1,17 +1,24 @@
-import { Input } from "@chakra-ui/react"
-import { Button } from "@chakra-ui/react"
-
+import { Input, Button } from "@chakra-ui/react";
+import styles from './Login.module.scss';
 
 const Login = () => {
-	return (
-		<>
-			<Input placeholder="Username" type='text'/>
-			<Input placeholder="Password" type='password' />
-			<input type="checkbox" />
-			<Button>Login</Button>
-		</>
+  return (
+    <div className={styles.container}>
+      <div className={styles.form}>
+        <h2>Login</h2>
+        <div className={styles.inputField}>
+          <Input placeholder="Username" type='text' size="lg" />
+        </div>
+        <div className={styles.inputField}>
+          <Input placeholder="Password" type='password' size="lg" />
+        </div>
+        <div className={styles.checkboxLabel}>
+          <input type="checkbox" /> <span>Remember Me</span>
+        </div>
+        <Button className={styles.button} size="lg">Login</Button>
+      </div>
+    </div>
+  );
+};
 
-	)
-}
-
-export default Login
+export default Login;
