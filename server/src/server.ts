@@ -7,7 +7,10 @@ import clientsRouter from './routes/clients/clientRoutes';
 const app = express()
 const port = 3000;
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5176',
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.static('public'));
 app.use(cookieParser());
