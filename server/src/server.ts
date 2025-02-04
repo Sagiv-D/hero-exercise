@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 import cookieParser from 'cookie-parser'; 
 import 'dotenv/config';
 import cors from 'cors';
-import clientsRouter from './routes/clients/clientRoutes';
+import authRouter from './routes/auth/authRoutes';
+import heroesRouter from './routes/heroes/heroesRoutes';
+
 const app = express()
 const port = 3000;
 
@@ -27,7 +29,8 @@ mongoose.connect(`${dbUrl}/${database}`).then(()=>{
 });
 
 //routes
-app.use("/api/clients", clientsRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/heroes", heroesRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
