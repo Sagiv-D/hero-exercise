@@ -24,7 +24,7 @@ export async function authLogin(req: any, res: any) {
 
         const token = jwt.encode({ id: user._id, role: "user" }, secret);
         res.cookie('user', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 7 });
-        return res.status(200).send({ message: "Login successful" });
+        return res.status(200).send({ message: "Login successful", token });
 
     } catch (error: any) {
         if (error.code = "11000") {

@@ -1,7 +1,6 @@
 import { AuthModel } from '../../model/auth/authModel';
 import bcrypt from 'bcrypt';
-const saltRounds = process.env.SALT_BCRYPT || 10;
-
+const saltRounds = parseInt(process.env.SALT_BCRYPT || "10", 10);
 
 export const secret = process.env.SECRET_JWT || "secret"
 export async function authRegister(req: any, res: any) {
