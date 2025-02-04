@@ -4,11 +4,6 @@ import cookieParser from 'cookie-parser';
 import 'dotenv/config';
 import cors from 'cors';
 import clientsRouter from './routes/clients/clientRoutes';
-import productsRouter from './routes/products/productRoute';
-import commentsRouter from './routes/comments/commentsRoute';
-import todoRouter from './routes/todo/todoRoutes';
-import Purchase from "./routes/purchase/purchaseRouter";
-
 const app = express()
 const port = 3000;
 
@@ -30,10 +25,6 @@ mongoose.connect(`${dbUrl}/${database}`).then(()=>{
 
 //routes
 app.use("/api/clients", clientsRouter);
-app.use("/api/products", productsRouter);
-app.use("/api/comments", commentsRouter);
-app.use("/api/purchase", Purchase);
-app.use("/api/todo", todoRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
