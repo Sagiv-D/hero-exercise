@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Stack, Input, Button } from "@chakra-ui/react";
-import styles from "./CreateHeros.module.scss";
+import styles from './CreateHeros.module.scss'
 
 interface Hero {
   _id: string;
@@ -41,10 +41,13 @@ const CreateHeros = () => {
     try {
       const response = await fetch("http://localhost:3000/api/heroes/create-hero", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, imgURL, rating: 0 }),
+        headers: { "Content-Type": "application/json" ,
+          "Authorization": `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify({ name, imgURL, rating: 0, }),
       });
-
+      console.log(name)
+      console.log(imgURL)
       if (!response.ok) throw new Error("Failed to create hero");
 
       const newHero = await response.json();
@@ -58,16 +61,15 @@ const CreateHeros = () => {
 
   const handleDeleteHero = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/heroes/${id}`, { method: "DELETE" });
-      if (response.ok) {
-        setHeroes((prevHeroes) => prevHeroes.filter((hero) => hero._id !== id)); 
-      } else {
-        throw new Error("Failed to delete hero");
-      }
+      const response = await fetch(`http://localhost:3000/api/heroes/delete/${id}`, { method: "DELETE" });
+      if (!response.ok) throw new Error("Failed to delete hero");
+  
+      setHeroes((prevHeroes) => prevHeroes.filter((hero) => hero._id !== id));
     } catch (error) {
       console.error("Error deleting hero:", error);
     }
   };
+  
 
   const handleRateHero = async (id: string, rating: number) => {
     try {
@@ -88,21 +90,20 @@ const CreateHeros = () => {
 
   const handleSearchHeroes = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/heroes/search/${searchQuery}`);
+      const response = await fetch(`http://localhost:3000/api/heroes/search?name=${searchQuery}`);
+      if (!response.ok) throw new Error("Failed to search heroes");
+  
       const data = await response.json();
-      if (data.heroes) {
-        setHeroes(data.heroes);
-      } else {
-        console.error("No heroes found");
-      }
+      setHeroes(data.heroes || []);
     } catch (error) {
       console.error("Error searching heroes:", error);
     }
   };
+  
 
   useEffect(() => {
     fetchHeroes();
-  }, []);
+  }, []); 
 
   return (
     <div className={styles.container}>
