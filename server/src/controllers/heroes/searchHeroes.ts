@@ -2,13 +2,17 @@ import { HeroesModel } from "../../model/heroes/HeroesModel";
 
 export async function searchHeroes(req: any, res: any) {
     try {
-        const { name } = req.params;
+        const { name } = req.query; 
+
+        if (!name) {
+            return res.status(400).json({ error: "Please provide a name to search" });
+        }
 
         const heroes = await HeroesModel.find({
             name: { $regex: name, $options: 'i' }
         });
 
-        if (heroes.length === 0) {
+        if (!heroes.length) {
             return res.status(404).json({ message: "No heroes found" });
         }
 
