@@ -34,30 +34,36 @@ const CreateHeros = () => {
 
   const handleCreateHero = async () => {
     if (!name || !imgURL) {
-      alert("Please fill in all fields");
-      return;
+        alert("Please fill in all fields");
+        return;
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/heroes/create-hero", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" ,
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
-        },
-        body: JSON.stringify({ name, imgURL, rating: 0, }),
-      });
-      console.log(name)
-      console.log(imgURL)
-      if (!response.ok) throw new Error("Failed to create hero");
+        const response = await fetch("http://localhost:3000/api/heroes/create-hero", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ 
+                name,
+                imgURL
+            })
+        });
 
-      const newHero = await response.json();
-      setHeroes((prevHeroes) => [...prevHeroes, newHero]);
-      setName("");
-      setImgURL("");
-    } catch (error) {
-      console.error("Error creating hero:", error);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to create hero');
+        }
+
+        const newHero = await response.json();
+        setHeroes((prevHeroes) => [...prevHeroes, newHero]);
+        setName("");
+        setImgURL("");
+    } catch (error: any) {
+        console.error("Error creating hero:", error);
+        alert(error.message);
     }
-  };
+};
 
   const handleDeleteHero = async (id: string) => {
     try {
@@ -118,7 +124,7 @@ const CreateHeros = () => {
             onChange={(e) => setName(e.target.value)}
             className={styles.inputField}
           />
-          <Input
+          <Input  type="link"
             placeholder="Image URL"
             value={imgURL}
             onChange={(e) => setImgURL(e.target.value)}

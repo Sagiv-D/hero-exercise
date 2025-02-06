@@ -1,7 +1,6 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import HomePage from './components/homePage/HomePage';
-import Login from './components/login/Login';
 import { Provider } from './components/ui/provider';
 import RegisterOrLogin from './components/registerOrLogin/RegisterOrLogin';
 
