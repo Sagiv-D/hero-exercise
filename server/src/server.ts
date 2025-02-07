@@ -18,8 +18,8 @@ app.use(express.static('public'));
 app.use(cookieParser());
 
 //DB
-const dbUrl = process.env.DB_URL;
-const database = process.env.DATABASE;
+const dbUrl = "mongodb+srv://adhcsvi1:sagiv123@cluster0.qyh2p.mongodb.net";
+const database = "LandingPage";
 
 //connection
 mongoose.connect(`${dbUrl}/${database}`).then(()=>{
